@@ -15,6 +15,10 @@ TaskKeyboardThumbnail::TaskKeyboardThumbnail(TaskSet set,
 	}
 }
 
+TaskKeyboardPrototype TaskKeyboardThumbnail::getPrototype() {
+	return static_cast<TaskKeyboardPrototype>(*this);
+}
+
 void TaskKeyboardThumbnail::draw(sf::RenderTarget &target,
 		sf::RenderStates states) const {
 	for (unsigned int i = 0; i < keys.size(); i++)

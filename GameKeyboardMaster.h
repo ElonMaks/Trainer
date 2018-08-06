@@ -4,7 +4,6 @@
  * todo the next sequence of keys will be shown in random time (between 0.3s-1.4s).
  */
 
-
 #ifndef GAMEKEYBOARDMASTER_H_
 #define GAMEKEYBOARDMASTER_H_
 
@@ -26,46 +25,47 @@ public:
 	void display();
 	void clear();
 
-	// Program states
+	// program states
 	enum KeyboardMasterGamePhase {
-		INI, PREPRESTART, PRESTART, GAME, ASSIGMENT_DONE, WAIT4NEXT_ASSIGMENT, FINISHED
+		INTRO, PRESTART, GAME, ASSIGMENT_DONE, WAIT4NEXT_ASSIGMENT, FINISHED
 	};
 
 	virtual ~GameKeyboardMaster();
 private:
 	// ********************* GENERAL ************************
-	LogBook & logBook;
-
 	KeyboardMasterGamePhase phase;
-
+	LogBook & logBook;
 	SpecialEffects specialEffects;
 	bool exit;
 
 	// ******************* GAME COMPONENTS *******************
+	// list of all possible tasks in this game
 	std::vector<TaskKeyboardThumbnail*> avaibleTasks;
-//	std::vector<TaskKeyboardThumbnail> avaibleTasksThumbnails;
+
+	// results of draw, tasks ...
 	std::vector<TaskKeyboard> tasks;
 	unsigned int currentTask;
 
-	SettingsListGameKeyboardMaster settings; // user settings
+	// all the user settings
+	SettingsListGameKeyboardMaster settings;
 
 	// timers
 	sf::Clock cl1, nextClk;
 
 	float nextTaskDelay;
 
-	// Text field for: 3 2 1 (used in prestart phase)
+	// text field for: 3 2 1 used in prestart phase
 	sf::Text textCountdown;
 
-	// Timers
+	// timers
 	sf::Clock preStartTimer, startTimer;
 	sf::Clock endTimer;
 
-	// Fonts
+	// fonts
 	sf::Font fontPorkys, fontTahoma;
 
 	// *************************************************************
-	// Other graphicals elements
+	// other graphicals elements
 	sf::RectangleShape bgRectMain;
 	sf::RectangleShape bgRectRight;
 

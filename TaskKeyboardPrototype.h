@@ -21,6 +21,7 @@ class TaskKeyboardPrototype {
 public:
 	TaskKeyboardPrototype();
 	TaskKeyboardPrototype(TaskSet set);
+	TaskKeyboardPrototype(std::vector<WhichKey> & keys);
 
 	std::vector<WhichKey> & getKeys();
 

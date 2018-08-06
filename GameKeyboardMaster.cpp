@@ -9,7 +9,7 @@ GameKeyboardMaster::GameKeyboardMaster(sf::RenderWindow &window, LogBook &logs) 
 	currentTask = 0;
 	nextTaskDelay = 0;
 
-	// Set background
+	// set background
 	bgRectMain.setSize(static_cast<sf::Vector2f>(window.getSize()));
 	bgRectMain.setFillColor(sf::Color(151, 110, 183));
 
@@ -21,16 +21,19 @@ GameKeyboardMaster::GameKeyboardMaster(sf::RenderWindow &window, LogBook &logs) 
 	fontPorkys.loadFromFile("data/PORKYS.ttf");
 	fontTahoma.loadFromFile("data/tahoma.ttf");
 
-	phase = INI;
+	phase = INTRO;
 	exit = false;
 }
 
 void GameKeyboardMaster::run() {
-	// At begging run settings' screen. Settings are set in struct "settings" sent by ref
+	// run settings' screen and save it into variable
 	SettingsGameKeyboardMaster settingsScreen(settings, *window, exit);
 	settingsScreen.run(event);
 
 	specialEffects.brighten(700);
+
+	if (!exit)
+		initialize();
 	// ***********************   MAIN LOOP  ************************* //
 	while (!exit) {
 		while (window->pollEvent(event)) {
@@ -50,44 +53,25 @@ void GameKeyboardMaster::run() {
 }
 
 void GameKeyboardMaster::initialize() {
-	//todo ini function
+	//todo create task list
+	for(unsigned int i = 0; i < settings.chosenTasks.size(); i++) {
+		//avaibleTasks.push_back(new TaskKeyboardThumbnaiyzwal(settings.chosenTasks[i].keys, 40, 210 + i * 50, *window));
+		// todo nowe wyzwanie ! drugi konstruktor, tworzenie thumbnail z grupy klawiszy
+	}
+
+	// use current time as seed for random generator
+	std::srand(std::time(NULL));
+
+	// set 5 random tasks from avaible pool
+	for (int i = 0; i < 5; i++) {
+		int x = std::rand() % avaibleTasks.size();
+		tasks.push_back(TaskKeyboard(avaibleTasks[x]->getKeys(), 40, 30, *window));
+	}
 }
 
 void GameKeyboardMaster::update() {
 	switch (phase) {
-	case INI: {
-		// todo wypierdol i do settings!
-		// hmm a moze przerobic z wirutalnej klasy podstawowej i bardziej abstrakcyjnej
-		// i tu utworzyc miniatrki?? hmmm
-		avaibleTasks.push_back(new TaskKeyboardThumbnail(TASK_1A2A3A, 40, 160 + 50, *window));
-		avaibleTasks.push_back(new TaskKeyboardThumbnail(TASK_1A2A3A4A,40, 160 + 100, *window));
-		avaibleTasks.push_back(new TaskKeyboardThumbnail(TASK_SC_RINES,40, 160 + 150, *window));
-		avaibleTasks.push_back(new TaskKeyboardThumbnail(TASK_SC_LINGS,40, 160 + 200, *window));
-		avaibleTasks.push_back(new TaskKeyboardThumbnail(TASK_SC_HYDRAS,40, 160 + 250, *window));
-
-//		// Make thumbnails of avaible tasks
-//		for (int i = 0; i < avaibleTasks.size(); i++) {
-//			avaibleTasksThumbnails.push_back(
-//					TaskKeyboardThumbnail(avaibleTasks[i], 40, 160 + i * 50,
-//							*window));
-//		}
-
-		// Use current time as seed for random generator
-		std::srand(std::time(NULL));
-
-		// Set random tasks from avaible pool
-		for (int i = 0; i < 5; i++) {
-			int x = std::rand() % avaibleTasks.size();
-			tasks.push_back(TaskKeyboard(avaibleTasks[x]->getKeys(), 40, 30, *window));
-		}
-
-		// Use current time as seed for random generator
-		std::srand(std::time(NULL));
-
-		phase = PREPRESTART;
-	}
-		break;
-	case PREPRESTART: {
+	case INTRO: {
 		bgRectRight.setPosition(
 				1850 - preStartTimer.getElapsedTime().asMilliseconds() / 2,
 				bgRectRight.getPosition().y);
@@ -101,7 +85,7 @@ void GameKeyboardMaster::update() {
 	}
 		break;
 	case PRESTART: {
-		// Countdown 3 2 1
+		// countdown 3 2 1
 		if (startTimer.getElapsedTime().asSeconds() < 3) {
 			if (startTimer.getElapsedTime().asSeconds() > 2)
 				textCountdown.setString("1");
@@ -122,7 +106,7 @@ void GameKeyboardMaster::update() {
 									/ 1) % 1000);
 
 		} else {
-			textCountdown.setColor(sf::Color(0, 0, 0, 0));
+			textCountdown.setColor(sf::Color{0, 0, 0, 0});
 			phase = GAME;
 		}
 	}
@@ -136,7 +120,7 @@ void GameKeyboardMaster::update() {
 	}
 		break;
 	case ASSIGMENT_DONE: {
-		// Make all elements of tasks transparent
+		// make all elements of tasks transparent
 		int transparency = cl1.getElapsedTime().asMilliseconds() / 2.2;
 		if (transparency > 255) {
 			transparency = 255;
@@ -164,7 +148,7 @@ void GameKeyboardMaster::update() {
 	}
 		break;
 	case WAIT4NEXT_ASSIGMENT: {
-		// When time is up go back to the task
+		// delay then go to next task
 		if (nextClk.getElapsedTime().asMilliseconds() > nextTaskDelay) {
 			currentTask++;
 			phase = GAME;
@@ -188,7 +172,7 @@ void GameKeyboardMaster::display() {
 			window->draw(tasks[currentTask]);
 	}
 
-	// Show thumbnails of all avaible tasks
+	// show thumbnails of all avaible tasks
 	for (unsigned int i = 0; i < avaibleTasks.size(); i++)
 		window->draw(*avaibleTasks[i]);
 

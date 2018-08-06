@@ -26,6 +26,7 @@ public:
 	};
 
 	void run(sf::Event &event);
+	void initialize();
 	void update();
 	void display();
 

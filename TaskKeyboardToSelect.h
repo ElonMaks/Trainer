@@ -19,12 +19,14 @@ public:
 	void update();
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
+	bool isSelected();
+
 	virtual ~TaskKeyboardToSelect();
 private:
 	// selected task means it'll be used in game
 	bool selected;
 
-	// to make delay between clicks
+	// to detect mousedown (avoid multi-clicks)
 	bool clickedBefore;
 
 	sf::CircleShape circ;

@@ -104,7 +104,7 @@ void SettingsGameColorsChessboard::run(sf::Event &event) {
 			}
 		}
 
-		// Leave loop in case of change phase → game
+		// Leave main loop if detect change of phase → game
 		if (state == GAME)
 			break;
 

@@ -58,10 +58,10 @@ void GameColorsChessboard::run() {
 }
 
 void GameColorsChessboard::initialize() {
-	// Put number of colors in palette into var nColors (it's used to make code cleaner)
+	// save number of colors in palette into var nColors
 	nColors = settings.chosenPalette->colors.size();
 
-	// Create memoColors on right side which player can drag on board
+	// create memoColors on right side which player can drag on board
 	int center = 100 + 62 * 4; // todo overload getParams methods for Chessboard
 	int topY = center - (nColors * 75 - 15) / 2;
 	for (int i = 0; i < nColors; i++) {
@@ -73,10 +73,10 @@ void GameColorsChessboard::initialize() {
 
 	preStartTimer.restart();
 
-	// Use current time as seed for random generator
+	// use current time as seed for random generator
 	std::srand(std::time(NULL));
 
-	// Set random, unique fields on chessboard and put
+	// set random, unique fields on chessboard and put
 	// memocolors from chosen palette to them
 	int n = 0;
 	while (n < nColors) {

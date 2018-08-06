@@ -61,11 +61,14 @@ TaskKeyboardPrototype::TaskKeyboardPrototype(TaskSet set) {
 
 }
 
+TaskKeyboardPrototype::TaskKeyboardPrototype(std::vector<WhichKey> & keys) {
+	this->keys = keys;
+}
+
 std::vector<WhichKey> & TaskKeyboardPrototype::getKeys() {
 	return keys;
 }
 
 TaskKeyboardPrototype::~TaskKeyboardPrototype() {
-	// TODO Auto-generated destructor stub
 }
 

@@ -19,17 +19,16 @@ public:
 	SettingsGameColorsChessboard(SettingsListGameColorsChessboard &settings,
 			sf::RenderWindow &window, bool & exitGame);
 
-	// Settings states
-	enum State {
-		SETTINGS, PREGAME, GAME
-	};
-
 	void run(sf::Event &event);
 	void update();
 	void display();
 
 	virtual ~SettingsGameColorsChessboard();
 private:
+
+	enum State {
+		SETTINGS, PREGAME, GAME
+	};
 	SettingsListGameColorsChessboard &settingsList;
 	Scrollbar scrollSecs4Reveal;
 	Scrollbar scrollNumOfRounds;

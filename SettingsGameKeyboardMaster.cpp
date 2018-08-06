@@ -7,13 +7,11 @@ SettingsGameKeyboardMaster::SettingsGameKeyboardMaster(
 				3), exit(exitGame), startBtn(window, 840, 570, 210, 95), specialEffects(
 				static_cast<sf::Vector2f>(window.getSize()), true) {
 	this->window = &window;
-
-	taskToSelect.push_back(
-			new TaskKeyboardToSelect(TASK_1A2A3A, 120,
-					140 + 50, window));
+	state = SETTINGS;
 }
 
 void SettingsGameKeyboardMaster::run(sf::Event &event) {
+	initialize();
 	specialEffects.brighten(400);
 	// ***********************   MAIN LOOP  ************************* //
 	while (!exit) {
@@ -27,7 +25,7 @@ void SettingsGameKeyboardMaster::run(sf::Event &event) {
 			}
 		}
 
-		// Leave loop in case of change phase → game
+		// Leave main loop if detect change of phase → game
 		if (state == GAME)
 			break;
 
@@ -36,6 +34,19 @@ void SettingsGameKeyboardMaster::run(sf::Event &event) {
 		display();
 	}
 	// ************************************************************** //
+}
+
+void SettingsGameKeyboardMaster::initialize() {
+	taskToSelect.push_back(
+			new TaskKeyboardToSelect(TASK_1A2A3A, 120, 160 + 50, *window));
+	taskToSelect.push_back(
+			new TaskKeyboardToSelect(TASK_1A2A3A4A, 120, 160 + 120, *window));
+	taskToSelect.push_back(
+			new TaskKeyboardToSelect(TASK_SC_RINES, 120, 160 + 190, *window));
+	taskToSelect.push_back(
+			new TaskKeyboardToSelect(TASK_SC_LINGS, 120, 160 + 260, *window));
+	taskToSelect.push_back(
+			new TaskKeyboardToSelect(TASK_SC_HYDRAS, 120, 160 + 330, *window));
 }
 
 void SettingsGameKeyboardMaster::update() {
@@ -60,8 +71,14 @@ void SettingsGameKeyboardMaster::update() {
 	}
 		break;
 	case PREGAME: {
-		if (toStartClk.getElapsedTime().asMilliseconds() > 320)
+		if (toStartClk.getElapsedTime().asMilliseconds() > 320) {
 			state = GAME;
+			for (unsigned int i = 0; i < taskToSelect.size(); i++) {
+				if (taskToSelect[i]->isSelected())
+					settingsList.chosenTasks.push_back(
+							(taskToSelect[i])->getPrototype());
+			}
+		}
 	}
 		break;
 	case GAME: {

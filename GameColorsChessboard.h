@@ -1,7 +1,7 @@
 /*
  * Harder version of classic memory game where the player has to remember location of
- * 4-9 various colors on 8x8 matrix. The board is classic chessboard to make this challenge
- * more comfortable then playing on blank matrix.
+ * 4-9 various colors on 8x8 matrix. The board is classic chessboard (to make this challenge
+ * more comfortable then playing on blank matrix).
  *
  * Game starts with showing each of colors (from chosen palette selected in settings screen)
  * in randomly selected fields on the board for a few seconds (time is set in settings). Then
@@ -52,15 +52,15 @@ public:
 private:
 	// ********************* GENERAL ************************
 	MemoryChessGamePhase phase;
-
 	LogBook & logBook; 		// results of game are saved here
-
 	int round;				// number of current round count up from 0
-
 	int goodChoices;		// variable used for counting n° good choices
 
-	SettingsListGameColorsChessboard settings; 	// all the user settings
-	int nColors; // number of colors in palette chosen in settings
+	// all the user settings
+	SettingsListGameColorsChessboard settings;
+
+	// number of colors in palette chosen in settings
+	int nColors;
 
 	SpecialEffects specialEffects;
 	bool exit;
@@ -82,6 +82,7 @@ private:
 
 	// to enable frame as red fields, when mouse hovers over them
 	HighlightFrame highlightFrame;
+
 	ChessboardField* currentField;
 	Color currentColor;
 	bool ifHandleIdle;
@@ -89,7 +90,7 @@ private:
 	// text field for: 3 2 1 (used in prestart phase)
 	sf::Text textCountdown;
 
-	// Field with information about player results
+	// Field with information about player results /obsolete
 //	sf::RectangleShape scoreRect;
 
 	// timers

@@ -18,6 +18,8 @@ public:
 	TaskKeyboardThumbnail(TaskSet set, int x, int y,
 			sf::RenderWindow &window);
 
+	TaskKeyboardPrototype getPrototype();
+
 	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 	virtual ~TaskKeyboardThumbnail();

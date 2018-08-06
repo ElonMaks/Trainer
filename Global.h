@@ -10,7 +10,6 @@
 class ColorsPalette;
 class TaskKeyboardPrototype;
 
-
 enum Color {
 	Red, Brown, Orange, Yellow, Green, Teal, Blue, Purple, Pink
 };
